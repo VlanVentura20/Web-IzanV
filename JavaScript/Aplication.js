@@ -25,3 +25,13 @@ $(document).ready(function () {
         $("#Proyectos, #Contacto, #Inicio").hide();
     });
 });
+$(document).ready(function () {
+    // Evento de entrada en la barra de búsqueda
+    $("#search").on("keyup", function () {
+        var value = $(this).val().toLowerCase(); // Captura el valor del input y lo convierte en minúsculas
+        $(".result").filter(function () {
+            // Filtra los divs según el texto ingresado
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+    });
+});
