@@ -1,4 +1,4 @@
-README - Mi Página de Proyectos
+Pagina personal Izan Ventura
 Descripción
 Esta es mi página personal donde muestro mis proyectos y habilidades. La aplicación permite a los visitantes explorar diferentes proyectos en los que he trabajado, cada uno con una breve descripción que explica su propósito y características. También incluye una sección de contacto para que los interesados puedan comunicarse conmigo.
 
