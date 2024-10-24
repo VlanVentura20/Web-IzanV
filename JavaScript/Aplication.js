@@ -1,30 +1,21 @@
 $(document).ready(function () {
     $('#Proyectos, #Contacto').hide();
-});
 
-$(document).ready(function () {
     $("#BInicio").on("click", function () {
         $("#Inicio").show();
         $("#Proyectos, #Contacto").hide();
     });
-});
 
-$(document).ready(function () {
     $("#BProyectos").on("click", function () {
         $("#Proyectos").show();
         $("#Inicio, #Contacto").hide();
     });
-});
 
-$(document).ready(function () {
     $("#BContacto").on("click", function () {
         $("#Contacto").show();
         $("#Proyectos, #Inicio").hide();
     });
-});
 
-
-$(document).ready(function () {
     $("#search").on("keyup", function () {
         var value = $(this).val().toLowerCase();
 
@@ -53,8 +44,6 @@ $(document).ready(function () {
             $('.project-card').show();
         }
     });
-});
-
 
 const projectDescriptions = {
     1: "Descripción detallada del Proyecto 1. Es un proyecto enfocado en el desarrollo de una aplicación móvil que permite a los usuarios gestionar sus tareas diarias de manera eficiente. Incluye funcionalidades como recordatorios, listas de tareas y un calendario integrado que ayuda a los usuarios a mantenerse organizados y productivos.",
@@ -68,7 +57,6 @@ const projectDescriptions = {
     9: "Descripción detallada del Proyecto 9. El proyecto incluye funcionalidades como chat, grupos de interés y publicaciones para que los usuarios se conecten con personas de ideas afines. La red social está diseñada para fomentar la interacción y el intercambio de conocimientos entre sus miembros."
 };
 
-$(document).ready(function () {
     $(".project-card").click(function () {
         const projectId = $(this).data("project");
         const description = projectDescriptions[projectId];
