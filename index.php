@@ -1,3 +1,38 @@
+<?php
+$servidor = "localhost";
+$usuario = "root";
+$password = "";
+$base_datos = "izanv";
+
+// Crear la conexión
+$conexion = new mysqli($servidor, $usuario, $password, $base_datos);
+
+// Verificar la conexión
+if ($conexion->connect_error) {
+    die("Error de conexión: " . $conexion->connect_error);
+}
+
+// Insertar un nuevo nombre si se envía el formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nombre = $_POST["nombre"];
+
+    $sql = "INSERT INTO usuarios (nombre) VALUES (?)";
+    $stmt = $conexion->prepare($sql);
+
+    if ($stmt) {
+        $stmt->bind_param("s", $nombre);
+        $stmt->execute();
+        $stmt->close();
+    }
+}
+
+// Consulta para obtener todos los usuarios
+$sql = "SELECT * FROM proyectos";
+$result = $conexion->query($sql);
+
+// Cierra la conexión
+$conexion->close();
+?>
 <!DOCTYPE html>
 <html lang="es">
 
