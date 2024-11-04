@@ -12,26 +12,34 @@ if ($conexion->connect_error) {
     die("Error de conexión: " . $conexion->connect_error);
 }
 
-// Insertar un nuevo nombre si se envía el formulario
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre = $_POST["nombre"];
 
-    $sql = "INSERT INTO usuarios (nombre) VALUES (?)";
-    $stmt = $conexion->prepare($sql);
+if (isset($_GET['nombre'])) {
+  // Obtener el nombre del proyecto desde la URL
+  $nombre = $_GET['nombre'];
 
-    if ($stmt) {
-        $stmt->bind_param("s", $nombre);
-        $stmt->execute();
-        $stmt->close();
-    }
+  // Consulta para obtener la imagen correspondiente
+  $sql = "SELECT Foto FROM proyectos WHERE Nombre = ?";
+  $stmt = $conexion->prepare($sql);
+  $stmt->bind_param("s", $nombre);
+  $stmt->execute();
+  $stmt->bind_result($foto);
+  $stmt->fetch();
+  $stmt->close();
+
+  // Mostrar la imagen
+  if ($foto) {
+      header("Content-Type: image/jpeg"); // Cambia esto si la imagen no es JPEG
+      echo $foto; // Muestra los datos de la imagen directamente
+      exit; // Termina el script aquí para no ejecutar el resto del código
+  } else {
+      echo "No se encontró la imagen.";
+      exit; // Termina el script aquí si no se encuentra la imagen
+  }
 }
 
-// Consulta para obtener todos los usuarios
+// Consulta para obtener todos los proyectos
 $sql = "SELECT * FROM proyectos";
 $result = $conexion->query($sql);
-
-// Cierra la conexión
-$conexion->close();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -149,98 +157,39 @@ $conexion->close();
       </div>
 
 
-      <!--/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////Proyectos/////////////////////////////// 
+           <!--/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////Proyectos///////////////////////////////
 /////////////////////////////////////////////////////////////////////////////-->
 
+<div id="Proyectos" class="text-bg-warning container my-5">
+    <h2 class="text-center mb-4">Mis Proyectos</h2>
+    <div class="row">
+        <?php
+        if ($result->num_rows > 0) {
+            // Salida de datos de cada fila
+            while ($row = $result->fetch_assoc()) {
+                echo '<div class="col-lg-4 col-md-6 mb-4">';
+                echo '  <div class="card project-card" data-project="' . htmlspecialchars($row['Nombre']) . '">';
+                
+                // Cambiar la ruta de la imagen a la misma página con el nombre del proyecto
+                echo '    <img src="?nombre=' . urlencode($row['Nombre']) . '" class="card-img-top" alt="' . htmlspecialchars($row['Nombre']) . '">';
+                
+                echo '    <div class="card-body">';
+                echo '      <h5 class="card-title">' . htmlspecialchars($row['Nombre']) . '</h5>';
+                echo '      <p class="card-text">Haz clic para ver más detalles</p>';
+                echo '    </div>';
+                echo '  </div>';
+                echo '</div>';
+            }
+        } else {
+            echo '<p class="text-center">No hay proyectos disponibles en este momento.</p>';
+        }
 
-      <div id="Proyectos" class="text-bg-warning container my-5">
-        <h2 class="text-center mb-4">Mis Proyectos</h2>
-        <div class="row">
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card project-card" data-project="1">
-              <img src="img/FEC.png" class="card-img-top" alt="Proyecto 1">
-              <div class="card-body">
-                <h5 class="card-title">FEC</h5>
-                <p class="card-text">Haz clic para ver más detalles</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card project-card" data-project="2">
-              <img src="img/2.png" class="card-img-top" alt="Proyecto 2">
-              <div class="card-body">
-                <h5 class="card-title">Página Web</h5>
-                <p class="card-text">Haz clic para ver más detalles</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card project-card" data-project="3">
-              <img src="img/3.png" class="card-img-top" alt="Proyecto 3">
-              <div class="card-body">
-                <h5 class="card-title">Sistema de Gestión</h5>
-                <p class="card-text">Haz clic para ver más detalles</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card project-card" data-project="4">
-              <img src="img/8.jpeg" class="card-img-top" alt="Proyecto 4">
-              <div class="card-body">
-                <h5 class="card-title">API de Servicios</h5>
-                <p class="card-text">Haz clic para ver más detalles</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card project-card" data-project="5">
-              <img src="img/4.png" class="card-img-top" alt="Proyecto 5">
-              <div class="card-body">
-                <h5 class="card-title">Plataforma de E-learning</h5>
-                <p class="card-text">Haz clic para ver más detalles</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card project-card" data-project="6">
-              <img src="img/5.png" class="card-img-top" alt="Proyecto 6">
-              <div class="card-body">
-                <h5 class="card-title">Chatbot Inteligente</h5>
-                <p class="card-text">Haz clic para ver más detalles</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card project-card" data-project="7">
-              <img src="img/6.png" class="card-img-top" alt="Proyecto 7">
-              <div class="card-body">
-                <h5 class="card-title">Blockchain Aplicado</h5>
-                <p class="card-text">Haz clic para ver más detalles</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card project-card" data-project="8">
-              <img src="img/7.jpeg" class="card-img-top" alt="Proyecto 8">
-              <div class="card-body">
-                <h5 class="card-title">Aplicación de Salud</h5>
-                <p class="card-text">Haz clic para ver más detalles</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card project-card" data-project="9">
-              <img src="img/9.png" class="card-img-top" alt="Proyecto 9">
-              <div class="card-body">
-                <h5 class="card-title">Red Social</h5>
-                <p class="card-text">Haz clic para ver más detalles</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+        // Cierra la conexión
+        $conexion->close();
+        ?>
+    </div>
+</div>
 
       <!--/////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////Contacto//////////////////////////////// 
@@ -330,6 +279,9 @@ $conexion->close();
 
       <script src="JavaScript/jquery-3.7.1.min.js"></script>
       <script src="JavaScript/Aplication.js"></script>
+      <?php
+      $conexion->close();
+      ?>
   </body>
 
   </html>
