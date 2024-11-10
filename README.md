@@ -18,7 +18,8 @@ Búsqueda de Proyectos: Incluye una barra de búsqueda que permite a los usuario
 Estructura del Código
 El código está organizado en las siguientes secciones:
 
-HTML: Define la estructura de la página, incluyendo las secciones de perfil, proyectos y contacto.
+PHP: Define la estructura de la página, incluyendo las secciones de perfil, proyectos y contacto.
+Los proyectos aparecen de forma dinamica segun los que haya en la base de datos
 
 Bootstrap: Estilos que dan formato a la página y mejoran la experiencia visual del usuario.
 
