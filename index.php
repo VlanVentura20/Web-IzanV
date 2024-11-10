@@ -168,18 +168,15 @@ $result = $conexion->query($sql);
         if ($result->num_rows > 0) {
             // Salida de datos de cada fila
             while ($row = $result->fetch_assoc()) {
-                echo '<div class="col-lg-4 col-md-6 mb-4">';
-                echo '  <div class="card project-card" data-project="' . htmlspecialchars($row['Nombre']) . '">';
-                
-                // Cambiar la ruta de la imagen a la misma página con el nombre del proyecto
-                echo '    <img src="?nombre=' . urlencode($row['Nombre']) . '" class="card-img-top" alt="' . htmlspecialchars($row['Nombre']) . '">';
-                
-                echo '    <div class="card-body">';
-                echo '      <h5 class="card-title">' . htmlspecialchars($row['Nombre']) . '</h5>';
-                echo '      <p class="card-text">Haz clic para ver más detalles</p>';
-                echo '    </div>';
-                echo '  </div>';
-                echo '</div>';
+              echo '<div class="col-lg-4 col-md-6 mb-4">';
+              echo '  <div class="card project-card" data-project="' . htmlspecialchars($row['Nombre']) . '">';
+              echo '    <img src="?nombre=' . urlencode($row['Nombre']) . '" class="card-img-top" alt="' . htmlspecialchars($row['Nombre']) . '">';
+              echo '    <div class="card-body">';
+              echo '      <h5 class="card-title">' . htmlspecialchars($row['Nombre']) . '</h5>';
+              echo '      <p class="card-text">Haz clic para ver más detalles</p>';
+              echo '    </div>';
+              echo '  </div>';
+              echo '</div>';
             }
         } else {
             echo '<p class="text-center">No hay proyectos disponibles en este momento.</p>';
@@ -279,9 +276,6 @@ $result = $conexion->query($sql);
 
       <script src="JavaScript/jquery-3.7.1.min.js"></script>
       <script src="JavaScript/Aplication.js"></script>
-      <?php
-      $conexion->close();
-      ?>
   </body>
 
   </html>
